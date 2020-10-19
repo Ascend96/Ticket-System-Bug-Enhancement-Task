@@ -13,11 +13,25 @@ namespace EnhancedTicketSystem
 
             logger.Info("Program Started");
 
-            // string ticketFilePath = "ticketFilePath.csv";
+            string ticketFilePath = "Ticket.csv";
+           // string enhancementTicket = "Enhancement.csv";
 
-            // ticket object code goes here
+            BugTicketFile bugTicketFile = new BugTicketFile(ticketFilePath);
 
             string choice = "";
+
+            // testing object
+           /* Ticket.Bug defaultTicket = new Ticket.Bug(){
+                ticketId = 1,
+                summary = "summary",
+                status = "status",
+                priority = "priority",
+                severity = "severity",
+                submitter = "Name",
+                assigned = "name",
+                watching = {"name", "name", "name"}
+            }; */
+            
 
             // do while loop for menu and option selection
 
@@ -30,7 +44,67 @@ namespace EnhancedTicketSystem
                 Console.WriteLine("5) Display all Enhancement Tickets");
                 Console.WriteLine("6) Display all Task Tickets");
                 
+                // takes users selection for options
                 choice = Console.ReadLine();
+
+                // displays option selected by user
+                logger.Info("User Selection: {choice}", choice);
+
+                // first option for bug/defect ticket
+                if(choice == "1"){
+                    // creates object with bug subclass
+                    Ticket.Bug ticket = new Ticket.Bug();
+
+                    // asks and gathers users input necessary for ticket
+                    Console.WriteLine("Enter Ticket Summary");
+
+                    ticket.summary = Console.ReadLine();
+
+                    Console.WriteLine("Enter Ticket Status");
+
+                    ticket.status = Console.ReadLine();
+
+                    Console.WriteLine("Enter Priority Level");
+
+                    ticket.priority = Console.ReadLine();
+
+                    Console.WriteLine("Enter Severity Level");
+                    
+                    ticket.severity = Console.ReadLine();
+
+                    Console.WriteLine("Enter name of ticket submitter");
+
+                    ticket.submitter = Console.ReadLine();
+
+                    Console.WriteLine("Enter name of person assigned to ticket");
+
+                    ticket.assigned = Console.ReadLine();
+
+                    
+                    string input; 
+                    // do while loop to ask for all names of people watching ticket
+                    do{
+                        Console.WriteLine("Enter Name of person(s) watching the ticket(Enter done to quit)");
+                        input = Console.ReadLine();
+
+                        // if any input is entered, add it to watching list
+                        if(input != "done" && input.Length > 0){
+                            ticket.watching.Add(input);
+                        }
+
+                    }while(input != "done");
+                        // if no input entered, add no listed watchers
+                        if (ticket.watching.Count == 0){
+                            ticket.watching.Add("No listed watchers");
+                        }
+                        // adds ticket to bug file
+                        bugTicketFile.AddTicket(ticket);
+                // displays all bug tickets in file
+                } else if(choice == "4"){
+                    foreach(Ticket.Bug t in bugTicketFile.Tickets){
+                        Console.WriteLine(t.Display());
+                    }
+                }
 
 
 

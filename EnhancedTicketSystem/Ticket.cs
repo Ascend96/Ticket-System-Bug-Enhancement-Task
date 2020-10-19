@@ -33,6 +33,8 @@ namespace EnhancedTicketSystem
             }
 
         }
+
+        // Enhancement derived from ticket class
         public class Enhancement : Ticket{
             public string software { get; set; }
             public double cost { get; set; }
@@ -44,6 +46,8 @@ namespace EnhancedTicketSystem
                 return $"ID: {ticketId}\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nSoftware: {software}\nCost: {cost}\nReason: {reason}\n Estimate: {estimate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
             }
         }
+
+        // Task derived from ticket class
         public class Task : Ticket{
             public string projectName { get; set; }
             public string dueDate { get; set; }
