@@ -13,10 +13,13 @@ namespace EnhancedTicketSystem
 
             logger.Info("Program Started");
 
+            // sets file paths for tickets
             string ticketFilePath = "Ticket.csv";
-           // string enhancementTicket = "Enhancement.csv";
+            string enhancementTicket = "Enhancement.csv";
 
+            // creates ticket file object for tickets
             BugTicketFile bugTicketFile = new BugTicketFile(ticketFilePath);
+            EnhancementTicketFile enhancementTicketFile = new EnhancementTicketFile(enhancementTicket);
 
             string choice = "";
 
@@ -55,7 +58,7 @@ namespace EnhancedTicketSystem
                     // creates object with bug subclass
                     Ticket.Bug ticket = new Ticket.Bug();
 
-                    // asks and gathers users input necessary for ticket
+                    // asks and gathers users input necessary for bug ticket
                     Console.WriteLine("Enter Ticket Summary");
 
                     ticket.summary = Console.ReadLine();
@@ -99,9 +102,84 @@ namespace EnhancedTicketSystem
                         }
                         // adds ticket to bug file
                         bugTicketFile.AddTicket(ticket);
+                
+                } 
+                else if(choice == "2"){
+                    Ticket.Enhancement ticket = new Ticket.Enhancement();
+
+                    // asks and gathers users input necessary for enhancement ticket
+                    Console.WriteLine("Enter Ticket Summary");
+
+                    ticket.summary = Console.ReadLine();
+
+                    Console.WriteLine("Enter Ticket Status");
+
+                    ticket.status = Console.ReadLine();
+
+                    Console.WriteLine("Enter Priority Level");
+
+                    ticket.priority = Console.ReadLine();
+
+                    Console.WriteLine("Enter Software");
+                    
+                    ticket.software = Console.ReadLine();
+
+                    Console.WriteLine("Enter Cost");
+
+                    ticket.cost = Double.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter Reason");
+
+                    ticket.reason = Console.ReadLine();
+
+                    Console.WriteLine("Enter Price Estimate");
+
+                    ticket.estimate = Double.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter name of ticket submitter");
+
+                    ticket.submitter = Console.ReadLine();
+
+                    Console.WriteLine("Enter name of person assigned to ticket");
+
+                    ticket.assigned = Console.ReadLine();
+
+                    
+                    string input; 
+                    // do while loop to ask for all names of people watching ticket
+                    do{
+                        Console.WriteLine("Enter Name of person(s) watching the ticket(Enter done to quit)");
+                        input = Console.ReadLine();
+
+                        // if any input is entered, add it to watching list
+                        if(input != "done" && input.Length > 0){
+                            ticket.watching.Add(input);
+                        }
+
+                    }while(input != "done");
+                        // if no input entered, add no listed watchers
+                        if (ticket.watching.Count == 0){
+                            ticket.watching.Add("No listed watchers");
+                        }
+                        // adds ticket to enhancement file
+                        enhancementTicketFile.AddTicket(ticket);
+                
+
+
+
+                } 
+                else if(choice == "3"){
+                  
+                } 
                 // displays all bug tickets in file
-                } else if(choice == "4"){
+                else if(choice == "4"){
                     foreach(Ticket.Bug t in bugTicketFile.Tickets){
+                        Console.WriteLine(t.Display());
+                    }
+                }
+                // displays all enhancement tickets in file
+                else if(choice == "5"){
+                    foreach(Ticket.Enhancement t in enhancementTicketFile.Tickets){
                         Console.WriteLine(t.Display());
                     }
                 }

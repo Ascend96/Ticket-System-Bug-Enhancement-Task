@@ -7,18 +7,18 @@ using System.Linq;
 namespace EnhancedTicketSystem
 {   
     // this file only used for bug tickets
-    public class BugTicketFile{
+    public class EnhancementTicketFile{
 
         public string filePath { get; set; }
 
-        public List<Ticket.Bug> Tickets { get; set; }
+        public List<Ticket.Enhancement> Tickets { get; set; }
 
         private static NLog.Logger logger = NLogBuilder.ConfigureNLog(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
 
-        // reads file and stores each csv into array index to create bug ticket
-        public BugTicketFile(string ticketFilePath){
+        // reads file and stores each csv into array index to create enhancement ticket
+        public EnhancementTicketFile(string ticketFilePath){
             filePath = ticketFilePath;
-            Tickets = new List<Ticket.Bug>();
+            Tickets = new List<Ticket.Enhancement>();
             
             // skips first line for headers
             try {
@@ -26,7 +26,7 @@ namespace EnhancedTicketSystem
                 sr.ReadLine();
 
                 while(!sr.EndOfStream){
-                    Ticket.Bug ticket = new Ticket.Bug();
+                    Ticket.Enhancement ticket = new Ticket.Enhancement();
                     string line = sr.ReadLine();
 
                     string[] ticketDetails = line.Split(',');
@@ -34,30 +34,33 @@ namespace EnhancedTicketSystem
                     ticket.summary = ticketDetails[1];
                     ticket.status = ticketDetails[2];
                     ticket.priority = ticketDetails[3];
-                    ticket.severity = ticketDetails[4];
-                    ticket.submitter = ticketDetails[5];
-                    ticket.assigned = ticketDetails[6];
-                    ticket.watching = ticketDetails[7].Split('|').ToList();
+                    ticket.software = ticketDetails[4];
+                    ticket.cost = Double.Parse(ticketDetails[5]);
+                    ticket.reason = ticketDetails[6];
+                    ticket.estimate = Double.Parse(ticketDetails[7]);
+                    ticket.submitter = ticketDetails[8];
+                    ticket.assigned = ticketDetails[9];
+                    ticket.watching = ticketDetails[10].Split('|').ToList();
 
                     Tickets.Add(ticket);
                 }
                 sr.Close();
 
                 // logs how many tickets in file
-                logger.Info("Tickets in bug file {count}", Tickets.Count);
+                logger.Info("Tickets in enhancement file {count}", Tickets.Count);
             } catch (Exception ex){
                 logger.Error(ex.Message);
             }
         }
 
-        // writes bug ticket to the file and adds it to list
-        public void AddTicket(Ticket.Bug ticket){
+        // writes enhancement ticket to the file and adds it to list
+        public void AddTicket(Ticket.Enhancement ticket){
             try {
                 // uses 1 number higher than highest ticket id 
                 ticket.ticketId = Tickets.Max(t => t.ticketId) + 1;
 
                 StreamWriter sw = new StreamWriter(filePath, true);
-                sw.WriteLine($"{ticket.ticketId}, {ticket.summary}, {ticket.status}, {ticket.priority}, {ticket.severity}, {ticket.submitter}, {ticket.assigned}, {string.Join("| ", ticket.watching)}");
+                sw.WriteLine($"{ticket.ticketId}, {ticket.summary}, {ticket.status}, {ticket.priority}, {ticket.software}, {ticket.cost}, {ticket.reason}, {ticket.estimate}, {ticket.submitter}, {ticket.assigned}, {string.Join("| ", ticket.watching)}");
 
                 sw.Close();
 

@@ -1,0 +1,3 @@
+TicketId, Summary, Status, Priority, Software, Cost, Reason, Estimate, Submitter, Assigned, Watching
+2, summary, status, priority, software, 40, reason, 60, name, name, name| name| name
+3, Software doesnt optimize cost, working, high, software.exe, 90, budgeting, 90, jane doe, john smith, jane doe| john smith| name

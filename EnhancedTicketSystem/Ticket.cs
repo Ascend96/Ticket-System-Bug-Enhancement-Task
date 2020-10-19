@@ -29,7 +29,7 @@ namespace EnhancedTicketSystem
 
             public override string Display()
             {
-                return $"ID: {ticketId}\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nSeverity: {severity}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+                return $"\nID: {ticketId}\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nSeverity: {severity}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
             }
 
         }
@@ -43,7 +43,7 @@ namespace EnhancedTicketSystem
 
             public override string Display()
             {
-                return $"ID: {ticketId}\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nSoftware: {software}\nCost: {cost}\nReason: {reason}\n Estimate: {estimate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+                return $"\nTicket ID: {ticketId}\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nSoftware: {software}\nCost: ${cost}\nReason: {reason}\nEstimate: ${estimate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
             }
         }
 
@@ -54,7 +54,7 @@ namespace EnhancedTicketSystem
 
             public override string Display()
             {
-                return $"ID: {ticketId}\n\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nProject Name: {projectName}\nDue Date: {dueDate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+                return $"\nTicket ID: {ticketId}\n\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nProject Name: {projectName}\nDue Date: {dueDate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
             }
         }
        
