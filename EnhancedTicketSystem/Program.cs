@@ -16,11 +16,12 @@ namespace EnhancedTicketSystem
             // sets file paths for tickets
             string ticketFilePath = "Ticket.csv";
             string enhancementTicket = "Enhancement.csv";
+            string taskFilePath = "Task.csv";
 
             // creates ticket file object for tickets
             BugTicketFile bugTicketFile = new BugTicketFile(ticketFilePath);
             EnhancementTicketFile enhancementTicketFile = new EnhancementTicketFile(enhancementTicket);
-
+            TaskTicketFile taskTicketFile = new TaskTicketFile(taskFilePath);
             string choice = "";
 
             // testing object
@@ -163,12 +164,59 @@ namespace EnhancedTicketSystem
                         }
                         // adds ticket to enhancement file
                         enhancementTicketFile.AddTicket(ticket);
-                
-
-
-
                 } 
                 else if(choice == "3"){
+                    // creates object with task subclass
+                    Ticket.Task ticket = new Ticket.Task();
+
+                    // asks and gathers users input necessary for Task ticket
+                    Console.WriteLine("Enter Ticket Summary");
+
+                    ticket.summary = Console.ReadLine();
+
+                    Console.WriteLine("Enter Ticket Status");
+
+                    ticket.status = Console.ReadLine();
+
+                    Console.WriteLine("Enter Priority Level");
+
+                    ticket.priority = Console.ReadLine();
+
+                    Console.WriteLine("Enter Project Name");
+                    
+                    ticket.projectName = Console.ReadLine();
+
+                    Console.WriteLine("Enter project due date");
+
+                    ticket.dueDate = Console.ReadLine();
+
+                    Console.WriteLine("Enter name of ticket submitter");
+
+                    ticket.submitter = Console.ReadLine();
+
+                    Console.WriteLine("Enter name of person assigned to ticket");
+
+                    ticket.assigned = Console.ReadLine();
+
+                    
+                    string input; 
+                    // do while loop to ask for all names of people watching ticket
+                    do{
+                        Console.WriteLine("Enter Name of person(s) watching the ticket(Enter done to quit)");
+                        input = Console.ReadLine();
+
+                        // if any input is entered, add it to watching list
+                        if(input != "done" && input.Length > 0){
+                            ticket.watching.Add(input);
+                        }
+
+                    }while(input != "done");
+                        // if no input entered, add no listed watchers
+                        if (ticket.watching.Count == 0){
+                            ticket.watching.Add("No listed watchers");
+                        }
+                        // adds ticket to task file
+                        taskTicketFile.AddTicket(ticket);
                   
                 } 
                 // displays all bug tickets in file
@@ -180,6 +228,12 @@ namespace EnhancedTicketSystem
                 // displays all enhancement tickets in file
                 else if(choice == "5"){
                     foreach(Ticket.Enhancement t in enhancementTicketFile.Tickets){
+                        Console.WriteLine(t.Display());
+                    }
+                }
+                // displays all task tickets in file
+                else if(choice == "6"){
+                    foreach(Ticket.Task t in taskTicketFile.Tickets){
                         Console.WriteLine(t.Display());
                     }
                 }
