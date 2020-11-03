@@ -273,6 +273,8 @@ namespace EnhancedTicketSystem
                         }
                         // changes console color back to white
                         Console.ForegroundColor = ConsoleColor.White;
+                        // adds up all tickets with count aggregation method and displays number of results
+                        Console.WriteLine($"There are {taskTickets.Count() + enhanceTickets.Count() + bugTickets.Count()} matching results\n\n");
 
                     }
                     else if(option == "2"){
@@ -302,6 +304,8 @@ namespace EnhancedTicketSystem
                         }
 
                         Console.ForegroundColor = ConsoleColor.White;
+                        // adds up all tickets with count aggregation method and displays number of results
+                        Console.WriteLine($"There are {taskTickets.Count() + enhanceTickets.Count() + bugTickets.Count()} matching results\n\n");
 
                     }
                     else if(option == "3"){
@@ -331,6 +335,8 @@ namespace EnhancedTicketSystem
                         }
 
                         Console.ForegroundColor = ConsoleColor.White;
+                        // adds up all tickets with count aggregation method and displays number of results
+                        Console.WriteLine($"There are {taskTickets.Count() + enhanceTickets.Count() + bugTickets.Count()} matching results\n\n");
 
                     }
                 }
