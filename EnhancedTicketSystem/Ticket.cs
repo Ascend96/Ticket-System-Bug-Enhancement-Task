@@ -54,7 +54,7 @@ namespace EnhancedTicketSystem
 
             public override string Display()
             {
-                return $"\nTicket ID: {ticketId}\n\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nProject Name: {projectName}\nDue Date: {dueDate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+                return $"\nTicket ID: {ticketId}\nSummary: {summary}\nStatus: {status}\nPriority: {priority}\nProject Name: {projectName}\nDue Date: {dueDate}\nSubmitter: {submitter}\nAssigned to: {assigned}\nWatching: {string.Join(", ", watching)}\n";
             }
         }
        

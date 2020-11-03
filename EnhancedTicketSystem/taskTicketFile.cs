@@ -54,7 +54,8 @@ namespace EnhancedTicketSystem
         // writes task ticket to the file and adds it to list
         public void AddTicket(Ticket.Task ticket){
             try {
-                // uses 1 number higher than highest ticket id 
+                // uses 1 number higher than highest ticket id
+                 
                 ticket.ticketId = Tickets.Max(t => t.ticketId) + 1;
 
                 StreamWriter sw = new StreamWriter(filePath, true);

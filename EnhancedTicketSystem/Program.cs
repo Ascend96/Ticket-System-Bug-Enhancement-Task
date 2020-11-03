@@ -1,6 +1,7 @@
 ﻿using System;
 using NLog.Web;
 using System.IO;
+using System.Linq;
 
 namespace EnhancedTicketSystem
 {
@@ -8,6 +9,7 @@ namespace EnhancedTicketSystem
     {
         // create static instance of logger
         private static NLog.Logger logger = NLogBuilder.ConfigureNLog(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
 
@@ -47,6 +49,7 @@ namespace EnhancedTicketSystem
                 Console.WriteLine("4) Display all Bug/Defect Tickets");
                 Console.WriteLine("5) Display all Enhancement Tickets");
                 Console.WriteLine("6) Display all Task Tickets");
+                Console.WriteLine("7) Search status, priority or submitter of ticket");
                 
                 // takes users selection for options
                 choice = Console.ReadLine();
@@ -236,13 +239,102 @@ namespace EnhancedTicketSystem
                     foreach(Ticket.Task t in taskTicketFile.Tickets){
                         Console.WriteLine(t.Display());
                     }
+                } 
+                // Search through tickets of any type based on status, priority or submitter
+                else if (choice == "7"){
+                    // displays choices
+                    Console.WriteLine("1) Search by Status of tickets");
+                    Console.WriteLine("2) Search by Priority of tickets");
+                    Console.WriteLine("3) Search by Submitter of tickets");
+                    var option = Console.ReadLine();
+                    if(option == "1"){
+                        Console.WriteLine("Enter status of ticket to search for");
+
+                        var resp = Console.ReadLine();
+                        // where operator to search through status of each ticket type
+                        var taskTickets = taskTicketFile.Tickets.Where(t => t.status.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        var enhanceTickets = enhancementTicketFile.Tickets.Where(e => e.status.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        var bugTickets = bugTicketFile.Tickets.Where(b => b.status.Contains(resp, StringComparison.OrdinalIgnoreCase));
+                        // changes console color to display selections that match
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        // three foreach loops to loop through each list and display the tickets that match
+                        foreach(Ticket.Task t in taskTickets){
+                        Console.WriteLine($"This is a task ticket: {t.Display()}");
+                        }
+
+                        foreach(Ticket.Enhancement e in enhanceTickets){
+                        Console.WriteLine($"This is a enhancement ticket:  {e.Display()}");
+                        }
+
+                        foreach(Ticket.Bug b in bugTickets){
+                        Console.WriteLine($"This is a bug ticket: {b.Display()}");
+                        }
+                        // changes console color back to white
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                    }
+                    else if(option == "2"){
+                        Console.WriteLine("Enter priority of ticket to search for");
+
+                        var resp = Console.ReadLine();
+
+                        // where operator to search through priority of each ticket type
+                        var taskTickets = taskTicketFile.Tickets.Where(t => t.priority.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        var enhanceTickets = enhancementTicketFile.Tickets.Where(e => e.priority.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        var bugTickets = bugTicketFile.Tickets.Where(b => b.priority.Contains(resp, StringComparison.OrdinalIgnoreCase));
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+
+                        // three foreach loops to loop through each list and display the tickets that match
+                        foreach(Ticket.Task t in taskTickets){
+                        Console.WriteLine($"This is a task ticket: {t.Display()}");
+                        }
+
+                        foreach(Ticket.Enhancement e in enhanceTickets){
+                        Console.WriteLine($"This is a enhancement ticket:  {e.Display()}");
+                        }
+
+                        foreach(Ticket.Bug b in bugTickets){
+                        Console.WriteLine($"This is a bug ticket: {b.Display()}");
+                        }
+
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                    }
+                    else if(option == "3"){
+                        Console.WriteLine("Enter status of ticket to search for");
+                        var resp = Console.ReadLine();
+
+                        // where operator to search through submitter of each ticket type
+                        var taskTickets = taskTicketFile.Tickets.Where(t => t.submitter.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        var enhanceTickets = enhancementTicketFile.Tickets.Where(e => e.submitter.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        var bugTickets = bugTicketFile.Tickets.Where(b => b.submitter.Contains(resp, StringComparison.OrdinalIgnoreCase));
+
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+
+                        // three foreach loops to loop through each list and display the tickets that match
+                        foreach(Ticket.Task t in taskTickets){
+                        Console.WriteLine($"This is a task ticket: {t.Display()}");
+                        }
+
+                        foreach(Ticket.Enhancement e in enhanceTickets){
+                        Console.WriteLine($"This is a enhancement ticket:  {e.Display()}");
+                        }
+
+                        foreach(Ticket.Bug b in bugTickets){
+                        Console.WriteLine($"This is a bug ticket: {b.Display()}");
+                        }
+
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                    }
                 }
-
-
-
-                
-
-            } while(choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5" || choice == "6");
+            } while(choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5" || choice == "6" || choice == "7");
 
             logger.Info("Program has ended");
         }
